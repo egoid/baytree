@@ -54,260 +54,41 @@ getGoogle = GooglePlus(settings.GOOGLE_PLUS_APP_ID, settings.GOOGLE_PLUS_APP_SEC
 getDropbox = DropboxOauthClient(settings.DROPBOX_APP_ID, settings.DROPBOX_APP_SECRET)
 getFoursquare = FoursquareOauthClient(settings.FOURSQUARE_APP_ID, settings.FOURSQUARE_APP_SECRET)
 
+import pyrebase
+
 def index(request):
-    print "index: " + str(request.user)
 
-    if not request.user.is_active:
-        if request.GET.items():
-            if profile_track == 'github':
-                code = request.GET['code']
-                getGithub.get_access_token(code)
-                getGithub.getUserInfo()
-                print getGithub.access_token
-                try:
-                    user = User.objects.get(username = getGithub.username + '_github')
-                except User.DoesNotExist:
-                    username = getGithub.username + '_github'
-                    new_user = User.objects.create_user(username, username+'@madewithgithub.com', 'password')
-                    new_user.save()
-                    try:
-                        profile = GithubProfile.objects.get(user = new_user.id)
-                        profile.access_token = getGithub.access_token
-                    except GithubProfile.DoesNotExist:
-                        profile = GithubProfile(user=new_user, access_token=getGithub.access_token, scopes=getGithub.scopes ,github_user=getGithub.username)
-                    profile.save()
-                user = authenticate(username=getGithub.username+'_github', password='password')
-                login(request, user)
-            elif profile_track == 'twitter':
-                oauth_verifier = request.GET['oauth_verifier']
-                getTwitter.get_access_token_url(oauth_verifier)
+    config = {
+      "apiKey": "AIzaSyBA1QJqobSlNn3PZ8fSNx0BHqqYGsACtsU",
+      "authDomain": "baytreeexpress-53112.firebaseapp.com",
+      "databaseURL": "https://baytreeexpress-53112.firebaseio.com",
+      "storageBucket": "",
+      "messagingSenderId": "70657304005",
+    }
 
-                try:
-                    user = User.objects.get(username = getTwitter.username + '_twitter')#(username=getTwitter.username)
-                except User.DoesNotExist:
-                    username = getTwitter.username + '_twitter'
-                    new_user = User.objects.create_user(username, username+'@madewithtwitter.com', 'password')
-                    new_user.save()
-                    profile = TwitterProfile(user = new_user,oauth_token = getTwitter.oauth_token, oauth_token_secret= getTwitter.oauth_token_secret, twitter_user=getTwitter.username)
-                    profile.save()
-                user = authenticate(username=getTwitter.username+'_twitter', password='password')
-                login(request, user)
-            elif profile_track == 'instagram':
-                code = request.GET['code']
-                getInstagram.get_access_token(code)
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+    indicas = []
+    sativas = []
+    hybrids = []
 
-                try:
-                    user = User.objects.get(username=getInstagram.user_data['username']+'_instagram')
-                except User.DoesNotExist:
-                    username = getInstagram.user_data['username']+'_instagram'
-                    new_user = User.objects.create_user(username, username+'@madewithinstagram.com', 'password')
-                    new_user.save()
-                    profile = InstagramProfile(user = new_user, access_token = getInstagram.access_token, instagram_user=getInstagram.user_data['username'])
-                    profile.save()
-                user = authenticate(username=getInstagram.user_data['username']+'_instagram' , password='password')
-                login(request, user)
-            elif profile_track == 'linkedin':
-                code = request.GET['code']
-                getLinkedIn.get_access_token(code)
-                getLinkedIn.getUserInfo()
+    nugs = db.child("indica").get()
+    for nug in nugs.each():
+        indicas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
 
-                try:
-                    user = User.objects.get(username=getLinkedIn.user_id+'_linkedin')
-                except User.DoesNotExist:
-                    username = getLinkedIn.user_id+'_linkedin'
-                    new_user = User.objects.create_user(username, username+'@madwithlinkedin.com', 'password')
-                    new_user.save()
-                    try:
-                        profile =LinkedinProfile.objects.get(user = new_user.id)
-                        profile.access_token = LinkedinProfile.access_token
-                    except LinkedinProfile.DoesNotExist:
-                        profile = LinkedinProfile(user=new_user, access_token=getLinkedIn.access_token, linkedin_user=getLinkedIn.user_id)
-                    profile.save()
-                user = authenticate(username=getLinkedIn.user_id+'_linkedin', password='password')
-                login(request, user)
-
-            elif profile_track == 'facebook':
-                code = request.GET['code']
-                getFacebook.get_access_token(code)
-                userInfo = getFacebook.get_user_info()
-                username = userInfo['first_name'] + userInfo['last_name']
-
-                try:
-                    user = User.objects.get(username=username+'_facebook')
-                except User.DoesNotExist:
-                    new_user = User.objects.create_user(username+'_facebook', username+'@madewithfacbook', 'password')
-                    new_user.save()
-
-                    try:
-                        profile = FacebookProfile.objects.get(user=new_user.id)
-                        profile.access_token = getFacebook.access_token
-                    except:
-                        profile = FacebookProfile()
-                        profile.user = new_user
-                        profile.fb_user_id = userInfo['id']
-                        profile.profile_url = userInfo['link']
-                        profile.access_token = getFacebook.access_token
-                    profile.save()
-                user = authenticate(username=username+'_facebook', password='password')
-                login(request, user)
-            elif profile_track == 'tumblr':
-                if not getTumblr.is_authorized:
-                    oauth_verifier = request.GET['oauth_verifier']
-                    getTumblr.access_token_url(oauth_verifier)
-                    getTumblr.getUserInfo()
-                    try:
-                        user = User.objects.get(username = getTumblr.username + '_tumblr')
-                    except User.DoesNotExist:
-                        username = getTumblr.username + '_tumblr'
-                        new_user = User.objects.create_user(username, username+'@madewithtumblr.com', 'password')
-                        new_user.save()
-                        try:
-                            profile =TumblrProfile.objects.get(user = new_user.id)
-                            profile.access_token = getTumblr.access_token['oauth_token']
-                            profile.access_token_secret = getTumblr.access_token['oauth_token_secret']
-                        except TumblrProfile.DoesNotExist:
-                            profile = TumblrProfile(user=new_user, access_token=getTumblr.access_token['oauth_token'], access_token_secret= getTumblr.access_token['oauth_token_secret'], tumblr_user=getTumblr.username)
-                        profile.save()
-                user = authenticate(username=getTumblr.username+'_tumblr', password='password')
-                login(request, user)
+    nugs = db.child("hybrid").get()
+    for nug in nugs.each():
+        hybrids.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
 
 
-            elif profile_track == 'google':
-                code = request.GET['code']
-                state = request.GET['state']
-                getGoogle.get_access_token(code, state)
-                userInfo = getGoogle.get_user_info()
-                username = userInfo['given_name'] + userInfo['family_name']
+    nugs = db.child("sativa").get()
+    for nug in nugs.each():
+        sativas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
 
-                try:
-                    user = User.objects.get(username=username+'_google')
-                except User.DoesNotExist:
-                    new_user = User.objects.create_user(username+'_google', username+'@madewithgoogleplus', 'password')
-                    new_user.save()
-
-                    try:
-                        profle = GoogleProfile.objects.get(user = new_user.id)
-                        profile.access_token = getGoogle.access_token
-                    except:
-                        profile = GoogleProfile()
-                        profile.user = new_user
-                        profile.google_user_id = userInfo['id']
-                        profile.access_token = getGoogle.access_token
-                        profile.profile_url = userInfo['link']
-                    profile.save()
-                user = authenticate(username=username+'_google', password='password')
-                login(request, user)
-
-            elif profile_track == 'dropbox':
-                code = request.GET['code']
-                state = request.GET['state']
-                getDropbox.get_access_token(code, state)
-                userInfo = getDropbox.get_user_info()
-                username = userInfo['name_details']['given_name'] + userInfo['name_details']['surname']
-
-                try:
-                    user = User.objects.get(username=username+'_dropbox')
-                except User.DoesNotExist:
-                    new_user = User.objects.create_user(username+'_dropbox', username+'@madewithdropbox', 'password')
-                    new_user.save()
-
-                    try:
-                        profile = DropboxProfile.objects.get(user=new_user.id)
-                        profile.access_token = getDropbox.access_token
-                    except:
-                        profile = DropboxProfile()
-                        profile.user = new_user
-                        profile.access_token = getDropbox.access_token
-                        profile.dropbox_user_id = userInfo['uid']
-                    profile.save()
-                user = authenticate(username=username+'_dropbox', password='password')
-                login(request, user)
-
-            elif profile_track == 'foursquare':
-                code = request.GET['code']
-                getFoursquare.get_access_token(code)
-                userInfo = getFoursquare.get_user_info()
-                username = userInfo['firstName'] + userInfo['lastName']
-
-                try:
-                    user = User.objects.get(username=username+'_foursquare')
-                except User.DoesNotExist:
-                    new_user = User.objects.create_user(username+'_foursquare', username+'@madewithfoursquare', 'password')
-                    new_user.save()
-
-                    try:
-                        profile = FoursquareProfile.object.get(user=new_user.id)
-                        profile.access_token = getFoursquare.access_token
-
-                    except:
-                        profile = FoursquareProfile()
-                        profile.user = new_user
-                        profile.foursquare_id = userInfo['id']
-                        profile.access_token = getFoursquare.access_token
-                    profile.save()
-
-                user = authenticate(username=username+'_foursquare', password='password')
-                login(request, user)
-
-
-
-
-
-    else:
-        if request.GET.items():
-            user = User.objects.get(username = request.user.username)
-            if profile_track == 'github':
-                code = request.GET['code']
-                getGithub.get_access_token(code)
-                getGithub.getUserInfo()
-
-                try:
-                    githubUser = GithubProfile.objects.get(user=user.id)
-                except GithubProfile.DoesNotExist:
-                    profile = GithubProfile(user=new_user, access_token=getGithub.access_token, scopes=getGithub.scopes ,github_user=getGithub.username)
-                    profile.save()
-            elif profile_track == 'twitter':
-                oauth_verifier = request.GET['oauth_verifier']
-                getTwitter.get_access_token_url(oauth_verifier)
-
-                try:
-                    twitterUser = TwitterProfile.objects.get(user = user.id)
-                except TwitterProfile.DoesNotExist:
-                    profile = TwitterProfile(user = user, oauth_token = getTwitter.oauth_token, oauth_token_secret= getTwitter.oauth_token_secret, twitter_user=getTwitter.username)
-                    profile.save()
-            elif profile_track == 'instagram':
-                code = request.GET['code']
-                getInstagram.get_access_token(code)
-
-                try:
-                    instagramUser = InstagramProfile.objects.get(user= user.id)
-                except InstagramProfile.DoesNotExist:
-                    profile = InstagramProfile(user = user, access_token = getInstagram.access_token, instagram_user=getInstagram.user_data['username'])
-                    profile.save()
-            elif profile_track == 'linkedin':
-                code = request.GET['code']
-                getLinkedIn.get_access_token(code)
-                getLinkedIn.getUserInfo()
-
-                try:
-                    linkedinUser = LinkedinProfile.objects.get(user=user.id)
-                except LinkedinProfile.DoesNotExist:
-                    profile = LinkedinProfile(user = user, access_token = getLinkedIn.access_token, linkedin_user=getLinkedIn.user_id)
-                    profile.save()
-            elif profile_track == 'tumblr':
-                if not getTumblr.is_authorized:
-                    oauth_verifier = request.GET['oauth_verifier']
-                    getTumblr.access_token_url(oauth_verifier)
-                    getTumblr.getUserInfo()
-
-                    try:
-                        tumblrUser = TumblrProfile.objects.get(user=user.id)
-                    except TumblrProfile.DoesNotExist:
-                        profile = TumblrProfile(user=user, access_token=getTumblr.access_token['oauth_token'], access_token_secret= getTumblr.access_token['oauth_token_secret'], tumblr_user=getTumblr.username)
-                        profile.save()
-
-
-    context = {'hello': 'world'}
+    context = {}
+    context['indicas'] = indicas
+    context['hybrids'] = hybrids
+    context['sativas'] = sativas
     return render(request, 'hackathon/index.html', context)
 
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load jsonify %}
 <html lang="en">
 
 <head>
@@ -54,9 +55,6 @@
                         <a href="#portfolio">About</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">Login</a>
-                    </li>                    
-                    <li class="page-scroll">
                         <a href="#about">Register</a>
                     </li>
                     <li class="page-scroll">
@@ -66,7 +64,7 @@
                         <a href="#contact">Contact</a>
                     </li>
                 </ul>
-            </div>
+            </div
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container-fluid -->
@@ -80,7 +78,7 @@
                     <div class="intro-text">
                         <span class="name">Delivering the best prices<br>for cannabis since 2016</span>
                         <hr class="star-light">
-                        <span class="skills">EST 2016 SF </span><br>
+                        <span class="skills">Ask about our 75$ ounces and 4.6 gram eighths</span><br>
                         <span class="skills">BayTree Express </span>
                     </div>
                 </div>
@@ -98,73 +96,20 @@
                 </div>
             </div>
             <div class="row">
+{% for item in indicas %}
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <span>${{item.gram.gram|jsonify}} per gram</span> <br>
                             </div>
                         </div>
-                        <center><h2 style="font-size:16px">White Fire OG</h2></center>
+                        <center><h2 style="font-size:16px">{{item.name}}</h2></center>
                         <img src="/static/img/portfolio/cabin.png" class="img-responsive" alt="">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Critical Kush</h2></center>
-                        <img src="/static/img/portfolio/cake.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Master Kush</h2></center>
-                        <img src="/static/img/portfolio/cake.png" class="img-responsive" alt="">
-                    </a>
-                </div>                
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Master Kush Ultra</h2></center>
-                        <img src="/static/img/portfolio/game.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">San Francisco OG</h2></center>
-                        <img src="/static/img/portfolio/safe.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Tahoe OG</h2></center>
-                        <img src="/static/img/portfolio/submarine.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-            </div>
+{% endfor %}
+                
         </div>
    <div class="container">
             <div class="row">
@@ -174,72 +119,20 @@
                 </div>
             </div>
             <div class="row">
+{% for item in hybrids %}
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <span>${{item.gram.gram|jsonify}} per gram</span> <br>
                             </div>
                         </div>
-                        <center><h2 style="font-size:16px">King Kong</h2></center>
+                        <center><h2 style="font-size:16px">{{item.name}}</h2></center>
                         <img src="/static/img/portfolio/cabin.png" class="img-responsive" alt="">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Critical Kush</h2></center>
-                        <img src="/static/img/portfolio/cake.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">King Kong</h2></center>
-                        <img src="/static/img/portfolio/circus.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Master Kush Ultra</h2></center>
-                        <img src="/static/img/portfolio/game.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">San Francisco OG</h2></center>
-                        <img src="/static/img/portfolio/safe.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Tahoe OG</h2></center>
-                        <img src="/static/img/portfolio/submarine.png" class="img-responsive" alt="">
-                    </a>
-                </div>
+{% endfor %}
+
             </div>
         </div>        
            <div class="container">
@@ -250,73 +143,20 @@
                 </div>
             </div>
             <div class="row">
+{% for item in sativas %}
                 <div class="col-sm-4 portfolio-item">
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <span>${{item.gram.gram}} per gram</span> <br>
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">White Fire OG</h2></center>
                         <img src="/static/img/portfolio/cabin.png" class="img-responsive" alt="">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+{% endfor %}
                             </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Critical Kush</h2></center>
-                        <img src="/static/img/portfolio/cake.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">King Kong</h2></center>
-                        <img src="/static/img/portfolio/circus.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Master Kush Ultra</h2></center>
-                        <img src="/static/img/portfolio/game.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">San Francisco OG</h2></center>
-                        <img src="/static/img/portfolio/safe.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-                <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                        <div class="caption">
-                            <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
-                            </div>
-                        </div>
-                        <center><h2 style="font-size:16px">Tahoe OG</h2></center>
-                        <img src="/static/img/portfolio/submarine.png" class="img-responsive" alt="">
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 
