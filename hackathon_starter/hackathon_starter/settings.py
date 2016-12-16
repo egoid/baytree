@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'django_nose',
     'rest_framework',
     'corsheaders',
-    'jsonify',
 )
 
 MIDDLEWARE_CLASSES = (
