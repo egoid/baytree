@@ -74,16 +74,16 @@ def index(request):
 
     nugs = db.child("indica").get()
     for nug in nugs.each():
-        indicas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
+        indicas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() , 'img' :  str(nug.key()) })
 
     nugs = db.child("hybrid").get()
     for nug in nugs.each():
-        hybrids.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
+        hybrids.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() , 'img' :  str(nug.key())  })
 
 
     nugs = db.child("sativa").get()
     for nug in nugs.each():
-        sativas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() })
+        sativas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() , 'img' :  str(nug.key())  })
 
     context = {}
     context['indicas'] = indicas
