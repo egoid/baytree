@@ -60,7 +60,11 @@
                         <a href="#contact">Contact</a>
                     </li> 
                     <li>
-                        <a href="#">Shopping Cart</a>
+                      <button style="background:rgba(0,0,0,0.2)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                        <span> 0 </span>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                      </button>
+                        <!-- <a href="#">Shopping Cart</a> -->
                     </li>                                        
                 </ul>
             </div
@@ -68,7 +72,23 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     <!-- Header -->
     <header>
         <div class="container">
@@ -91,7 +111,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Indica</h2>
-                    <hr class="star-primary">
+                    <hr style="border-color:black">
                 </div>
             </div>
             <div class="row">
@@ -111,11 +131,11 @@
 {% endfor %}
                 
         </div>
-   <div class="container">
+   <div class="container">k
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Hybrid</h2>
-                    <hr class="star-primary">
+                    <hr style="border-color:black">
                 </div>
             </div>
             <div class="row">
@@ -139,7 +159,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Sativa</h2>
-                    <hr class="star-primary">
+                    <hr style="border-color:black">
                 </div>
             </div>
             <div class="row">
@@ -191,7 +211,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Contact Us</h2>
-                    <hr class="star-primary">
+                    <hr style="color:black">
                 </div>
             </div>
             <div class="row">
@@ -308,24 +328,20 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>OG Dank</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/nug.jpg" class="img-responsive img-centered" alt="">
-                            <p>hella dank</p>
-                            <ul class="list-inline item-details" style="display:none">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <h2 id="selected_nug_title">OG Dank</h2>
+                            <hr style="border-color:black">
+                            <div class="row">
+                              <div class="col-md-6" style="height:50vh">
+                                <img src="/static/img/nug.jpg" class="img-responsive img-centered" alt="">
+                                <p>hella dank</p>
+                              </div>
+                              <div class="col-md-6"  style="height:50vh">
+                                <center>
+                                  Indica 
+                                  <br>
+
+                                </center>
+                              </div>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
