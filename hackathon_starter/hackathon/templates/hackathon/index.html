@@ -149,7 +149,7 @@ function select_nug(name,gram) {
             <div class="row">
 {% for item in hybrids %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
@@ -173,7 +173,7 @@ function select_nug(name,gram) {
             <div class="row">
 {% for item in sativas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
