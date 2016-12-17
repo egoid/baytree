@@ -115,17 +115,18 @@
                 </div>
             </div>
 <script>
-function select_nug(name,gram) {
+function select_nug(name,gram,url) {
   console.log(name)
   console.log(gram)
     $("#selected_nug_title")[0].innerText = String(name)
     $("#select_nug_gram")[0].innerText = String("$ "+gram)
+    $("#chosen_nug_pic").attr('src','/static/img/'+String(url)+'.jpg')
 }
 </script>
             <div class="row">
 {% for item in indicas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
@@ -133,7 +134,7 @@ function select_nug(name,gram) {
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
-                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="">
+                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="" style="width:280px;height:180px">
                     </a>
                 </div>
 {% endfor %}
@@ -149,14 +150,14 @@ function select_nug(name,gram) {
             <div class="row">
 {% for item in hybrids %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
-                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="">
+                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="" style="width:280px;height:180px">
                     </a>
                 </div>
 {% endfor %}
@@ -173,14 +174,14 @@ function select_nug(name,gram) {
             <div class="row">
 {% for item in sativas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
-                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="">
+                        <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="" style="width:280px;height:180px">
                     </a>
                 </div>
 {% endfor %}
@@ -340,7 +341,7 @@ function select_nug(name,gram) {
                             <hr style="border-color:black">
                             <div class="row">
                               <div class="col-md-6" style="height:50vh">
-                                <img src="/static/img/nug.jpg" class="img-responsive img-centered" alt="">
+                                <img src="/static/img/nug.jpg" class="img-responsive img-centered" id="chosen_nug_pic" alt="">
                               </div>
                               <div class="col-md-6"  style="height:50vh">
                                 <center style="font-size:24px">
