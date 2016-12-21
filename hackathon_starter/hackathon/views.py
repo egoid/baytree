@@ -234,11 +234,9 @@ def index(request):
         sativas.append({'name' : str(nug.key()).replace("_"," ") , 'gram' : nug.val() , 'img' :  str(nug.key())  })
 
     context = {}
-    context['jobs'] = jobs
     context['indicas'] = indicas
     context['hybrids'] = hybrids
     context['sativas'] = sativas
-    return JsonResponse({"jobs":jobs})
     return render(request, 'hackathon/index.html', context)
 
 @csrf_exempt
