@@ -43,7 +43,6 @@
                 </button>
                 <a class="navbar-brand" href="#page-top" style="font-size:36px;font-family:Helvetica Neue;font-weight:100;letter-spacing:2px">BayTree Express</a>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -79,8 +78,48 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Shopping Cart</h4>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-body">  
+        <div id="loading_form" style="text-align:center;display:none">
+            <img src="https://cannador.com/images/load.gif">
+        </div>
+        <div id="login_form">
+            <h4>Login or Register to continue checking out</h4>
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon" id="sizing-addon3">Email</span>
+              <input type="text" class="form-control" aria-describedby="sizing-addon3" id="u_email">
+            </div>
+            <br>
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon" id="sizing-addon3">Password</span>
+              <input type="password" class="form-control" aria-describedby="sizing-addon3" id="u_password">
+            </div>
+            <a href="#" class="btn btn-lg btn-outline" style="color:black;font-weight:100;letter-spacing:2px" onClick="register()">
+               Register
+            </a>
+            <a href="#" class="btn btn-lg btn-outline" style="color:black;font-weight:100;letter-spacing:2px" onClick="login()">
+               Login
+            </a>
+        </div>
+        <div id="error_log" style="display:none">
+        <!-- <div id="error_log"> -->
+            <h8 style="color:red;">Something went wrong with your registration or login! Please try again. </h8>
+        </div>
+        <div id="upload_form">
+        <!-- <div id="upload_form" style="display:none"> -->
+            <h4>Upload your Doctor's recommendation</h4>
+              <form method="post" enctype="multipart/form-data" id="myForm" action="upload/"  target="dummyframe">
+                <input type="file" name="file" class="inputimg" id="nameImg" accept="image/*">
+                <br />
+                <span class="input-group-btn">
+                        <button  type="submit" class="btn btn-block">Upload Rec
+                        </button>
+                  </span>
+              </form>            
+        </div>
+        <div id="shopping_cart" style="display:none">
+            <h4>This is your shopping cart!</h4>
+        </div>
+        <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -89,13 +128,48 @@
     </div>
   </div>
 </div>
+<script>
+function register() {
+    $("#login_form").fadeOut(250)
+    $("#loading_form").fadeIn(250)
+    var email = ($("#u_email").val())
+    var password = ($("#u_password").val())
+    $.ajax({
+        url: 'register/',
+        method: 'POST',
+        data: {'email': email, 'password': password}
+    }).done(function(x) {
+        console.log(x)
+        if (x.error !== 'error') {
+            if (String(x.user) == String(email)) {
+                console.log(x.user)
+                $("#loading_form").fadeOut(250)
+                $("#upload_form").fadeIn(250)
+            }
+        } else {
+            console.log(x)
+            $("#loading_form").fadeOut(250)
+            $("#login_form").fadeIn(250)
+            $("#error_log").fadeIn(250)
+        }
+    })
+}
+ $("#myForm").bind('ajax:complete', function() {
+        console.log("upload complete")
+        $("#shopping_cart").fadeIn(250)
+         // tasks to do 
+
+
+});
+
+</script>
     <!-- Header -->
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-text">
-                        <span class="name">Delivering the best prices<br>for cannabis since 2016</span>
+                        <span class="name" style="font-size:3px">{{jobs}}</span>
   <hr>
                         <span class="skills">Ask about our 30 gram ounces for 75$ and 4.6 gram eighths</span><br>
                         <span class="skills">BayTree Express </span>
