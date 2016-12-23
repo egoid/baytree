@@ -34,6 +34,7 @@
 <body id="page-top" class="index">
 
     <!-- Navigation -->
+        <!-- <div class="row" style="padding:0px;margin:0px;width:100vw;height:100px;background:black">asdf</div> -->
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -41,7 +42,9 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="#page-top" style="font-size:36px;font-family:Helvetica Neue;font-weight:100;letter-spacing:2px">BayTree Express</a>
+                <a class="navbar-brand" href="#page-top" style="font-size:36px;font-family:Helvetica Neue;font-weight:100;letter-spacing:2px">BayTree Express<br>
+                    <div style="width:500px;font-size:12px;line-height:25px">(415) 241 - 2421  <div style="display:inline-block;position:relative;left:100px;"> Open 10 a.m. to 7 p.m. </div></div>
+                </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -59,8 +62,8 @@
                         <a href="#contact">Contact</a>
                     </li> 
                     <li>
-                      <button style="background:rgba(0,0,0,0.2)" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                        <span> 0 </span>
+                      <button style="background:rgba(0,0,0,0.2)" type="button" onClick="update_cart()" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                        <span id="number_of_items"> 0 </span>
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                       </button>
                         <!-- <a href="#">Shopping Cart</a> -->
@@ -104,31 +107,36 @@
         <!-- <div id="error_log"> -->
             <h8 style="color:red;">Something went wrong with your registration or login! Please try again. </h8>
         </div>
-        <div id="upload_form">
-        <!-- <div id="upload_form" style="display:none"> -->
+        <!-- <div id="upload_form"> -->
+        <div id="upload_form" style="display:none">
             <h4>Upload your Doctor's recommendation</h4>
               <form method="post" enctype="multipart/form-data" id="myForm" action="upload/"  target="dummyframe">
                 <input type="file" name="file" class="inputimg" id="nameImg" accept="image/*">
+                <input type="text" name="user" id="user" style="display:none">
                 <br />
                 <span class="input-group-btn">
-                        <button  type="submit" class="btn btn-block">Upload Rec
+                        <button  type="submit" class="btn btn-block" onClick="open_shop()">Upload Rec
                         </button>
                   </span>
               </form>            
         </div>
         <div id="shopping_cart" style="display:none">
             <h4>This is your shopping cart!</h4>
+            <div class="row" id="cart_pin" style="padding-left:50px">
+            <span> There's nothing here ! </span>
+            </div>
+            <center><button class="btn"> Place Order </button></center>
         </div>
         <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 <script>
+let cart = []
 function register() {
     $("#login_form").fadeOut(250)
     $("#loading_form").fadeIn(250)
@@ -139,28 +147,53 @@ function register() {
         method: 'POST',
         data: {'email': email, 'password': password}
     }).done(function(x) {
-        console.log(x)
         if (x.error !== 'error') {
             if (String(x.user) == String(email)) {
-                console.log(x.user)
+                $("#user")[0].value = String(x.user)
+                $("#error_log").fadeOut(250)
                 $("#loading_form").fadeOut(250)
                 $("#upload_form").fadeIn(250)
             }
         } else {
-            console.log(x)
             $("#loading_form").fadeOut(250)
             $("#login_form").fadeIn(250)
             $("#error_log").fadeIn(250)
         }
     })
 }
- $("#myForm").bind('ajax:complete', function() {
-        console.log("upload complete")
+function login() {
+    $("#login_form").fadeOut(250)
+    $("#loading_form").fadeIn(250)
+    var email = ($("#u_email").val())
+    var password = ($("#u_password").val())
+    $.ajax({
+        url: 'login/',
+        method: 'POST',
+        data: {'email': email, 'password': password}
+    }).done(function(x) {
+        console.log(x)
+        if (x.error !== 'error') {
+            if (String(x.user) == String(email)) {
+                open_shop()
+            }
+        }
+    })
+}
+function open_shop() {
+    update_cart()
+    setTimeout(function(){ 
+        $("#loading_form").fadeOut(250)
+        $("#upload_form").fadeOut(250)
         $("#shopping_cart").fadeIn(250)
-         // tasks to do 
-
-
-});
+    }, 2000);
+}
+function update_cart() {
+    console.log(cart)
+    $("#cart_pin")[0].innerHTML = ""
+    cart.forEach(function(item) {
+        $("#cart_pin").append("<div class='row'><div class='col-md-6'>"+String(item.strain)+"</div><div class='col-md-3'>"+String(item.qty)+"</div><div class='col-md-3'>"+String(item.price)+"</div></div><hr style='margin:3px'>")
+    })
+}
 
 </script>
     <!-- Header -->
@@ -190,11 +223,28 @@ function register() {
             </div>
 <script>
 function select_nug(name,gram,url) {
-  console.log(name)
-  console.log(gram)
     $("#selected_nug_title")[0].innerText = String(name)
     $("#select_nug_gram")[0].innerText = String("$ "+gram)
+    $("#select_nug_eighth")[0].innerText = String("$ "+gram*3)
+    $("#select_nug_quad")[0].innerText = String("$ "+gram*6)
+    $("#select_nug_half")[0].innerText = String("$ "+gram*8)
+    $("#select_nug_oz")[0].innerText = String("$ "+gram*11)
     $("#chosen_nug_pic").attr('src','/static/img/'+String(url)+'.jpg')
+}
+function add_to_cart(str) {
+    $("#item_"+str)[0].innerText = "Added"
+    if (str === 'gram') {var price = $("#select_nug_gram")[0].innerText.slice(2,5)}
+    if (str === 'eighth') {var price = $("#select_nug_eighth")[0].innerText.slice(2,5)}
+    if (str === 'quad') {var price = $("#select_nug_quad")[0].innerText.slice(2,5)}
+    if (str === 'half') {var price = $("#select_nug_half")[0].innerText.slice(2,5)}
+    if (str === 'oz') {var price = $("#select_nug_oz")[0].innerText.slice(2,5)}
+    var item = {
+        'strain' : $("#selected_nug_title")[0].innerText,
+        'qty' : str,
+        'price' : price
+    }
+    cart.push(item)
+    $("#number_of_items")[0].innerText = cart.length
 }
 </script>
             <div class="row">
@@ -204,7 +254,6 @@ function select_nug(name,gram,url) {
                         <div class="caption">
                             <div class="caption-content">
                                 <span>${{item.gram.gram}} per gram</span> <br>
-
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -417,22 +466,64 @@ function select_nug(name,gram,url) {
                               <div class="col-md-6" style="height:50vh">
                                 <img src="/static/img/nug.jpg" class="img-responsive img-centered" id="chosen_nug_pic" alt="">
                               </div>
-                              <div class="col-md-6"  style="height:50vh">
+                              <div class="col-md-6"  style="height:auto">
                                 <center style="font-size:24px">
 
 
 
 
-              <div class="row" style="border-bottom:1px solid black">
-                <div class="col-md-1">
-                  <input type="checkbox" aria-label="...">
-                </div>
-                <div class="col-md-5" style="text-align:left" id="select_nug_gram">5$</div>
-                <div class="col-md-5">for 1.2 grams</div>
-              </div>
+                                  <div class="row" style="border-bottom:1px solid black">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('gram')" id="item_gram"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_gram">5$</div>
+                                    <div class="col-md-5">for 1.2 grams</div>
+                                  </div>
 
 
 
+
+                                  <div class="row" style="border-bottom:1px solid black">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('eighth')" id="item_eighth"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_eighth">5$</div>
+                                    <div class="col-md-5">for 4.6 gram eighth</div>
+                                  </div>
+
+
+
+
+
+                                  <div class="row" style="border-bottom:1px solid black">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('quad')" id="item_quad"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_quad">5$</div>
+                                    <div class="col-md-5">for 9 gram quad</div>
+                                  </div>
+
+
+
+
+                                  <div class="row" style="border-bottom:1px solid black">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('half')" id="item_half"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_half">5$</div>
+                                    <div class="col-md-5">for 18 grams half</div>
+                                  </div>
+
+
+
+
+                                  <div class="row" style="border-bottom:1px solid black">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_oz">5$</div>
+                                    <div class="col-md-5">for 30 gram ounce</div>
+                                  </div>
                                   
                                   <br>
                                   or
