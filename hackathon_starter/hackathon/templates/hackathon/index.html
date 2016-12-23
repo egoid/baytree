@@ -43,7 +43,7 @@
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand" href="#page-top" style="font-size:36px;font-family:Helvetica Neue;font-weight:100;letter-spacing:2px">BayTree Express<br>
-                    <div style="width:500px;font-size:12px;line-height:25px">(415) 241 - 2421  <div style="display:inline-block;position:relative;left:100px;"> Open 10 a.m. to 7 p.m. </div></div>
+                    <div style="width:500px;font-size:12px;line-height:25px">(415) 650 - 8944  <div style="display:inline-block;position:relative;left:100px;"> Open 10 a.m. to 7 p.m. </div></div>
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -120,6 +120,7 @@
                   </span>
               </form>            
         </div>
+        <!-- <div id="shopping_cart"> -->
         <div id="shopping_cart" style="display:none">
             <h4>This is your shopping cart!</h4>
             <div class="row" id="cart_pin" style="padding-left:50px">
@@ -187,11 +188,26 @@ function open_shop() {
         $("#shopping_cart").fadeIn(250)
     }, 2000);
 }
+function remove_cart(i) {
+    console.log(i)
+    if (i == 0 && cart.length == 1) {
+        $("#cart_pin")[0].innerHTML = ""
+        cart = []    
+    } else {
+        cart.splice(i,1)
+        $("#cart_pin")[0].innerHTML = ""
+        cart.forEach(function(item, i) {
+            $("#cart_pin").append("<div class='row'><div class='col-md-6'>"+String(item.strain)+"</div><div class='col-md-3'>"+String(item.qty)+"</div><div class='col-md-2'>"+String(item.price)+"</div><div class='col-md-1'><i class='fa fa-trash' onClick='remove_cart(" +String(i) + ")'></i></div></div></div><hr style='margin:3px'>")
+        })
+        
+    }
+
+}
 function update_cart() {
     console.log(cart)
     $("#cart_pin")[0].innerHTML = ""
-    cart.forEach(function(item) {
-        $("#cart_pin").append("<div class='row'><div class='col-md-6'>"+String(item.strain)+"</div><div class='col-md-3'>"+String(item.qty)+"</div><div class='col-md-3'>"+String(item.price)+"</div></div><hr style='margin:3px'>")
+    cart.forEach(function(item, i) {
+        $("#cart_pin").append("<div class='row'><div class='col-md-6'>"+String(item.strain)+"</div><div class='col-md-3'>"+String(item.qty)+"</div><div class='col-md-2'>"+String(item.price)+"</div><div class='col-md-1'><i class='fa fa-trash' onClick='remove_cart(" +String(i) + ")'></i></div></div></div><hr style='margin:3px'>")
     })
 }
 
@@ -497,8 +513,8 @@ function reset_menu() {
     <!-- Portfolio Modals -->
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr" onClick="reset_menu()">
+            <div class="close-modal" data-dismiss="modal" onClick="reset_menu()">
+                <div class="lr">
                     <div class="rl">
                     </div>
                 </div>
