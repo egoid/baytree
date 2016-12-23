@@ -205,7 +205,7 @@ function update_cart() {
                         <span class="name">Delivering the best prices <br> on cannabis since 2016</span>
   <hr>
                         <span class="skills">Ask about our 30 gram ounces for 75$</span><br>
-                        <span class="skills">Call us at (415) 650 - 8944 !</span><br>
+                        <span class="skills">Call us at (415) 650 - 8944</span><br>
                         <span class="skills">Minimum 40$ order for delivery</span><br>
                     </div>
                 </div>
@@ -223,13 +223,18 @@ function update_cart() {
                 </div>
             </div>
 <script>
-function select_nug(name,gram,url) {
+function select_nug(name,gram,eighth,quarter,half,oz,url) {
+    if (quarter) {
+        $("#select_nug_quad")[0].innerText = String("$ "+quarter)
+        $("#select_nug_half")[0].innerText = String("$ "+half)
+        $("#select_nug_oz")[0].innerText = String("$ "+oz)
+        $("#indoor_hide").css('display','initial')
+    } else {
+        $("#indoor_hide").css('display','none')
+    }
     $("#selected_nug_title")[0].innerText = String(name)
     $("#select_nug_gram")[0].innerText = String("$ "+gram)
-    $("#select_nug_eighth")[0].innerText = String("$ "+gram*3)
-    $("#select_nug_quad")[0].innerText = String("$ "+gram*6)
-    $("#select_nug_half")[0].innerText = String("$ "+gram*8)
-    $("#select_nug_oz")[0].innerText = String("$ "+gram*11)
+    $("#select_nug_eighth")[0].innerText = String("$ "+eighth)
     $("#chosen_nug_pic").attr('src','/static/img/'+String(url)+'.jpg')
 }
 function add_to_cart(str) {
@@ -251,10 +256,22 @@ function add_to_cart(str) {
             <div class="row">
 {% for item in indicas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
+                                <!-- {{item}} -->
+                    {% if item.gram.quarter %}
+                            <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                                <span>${{item.gram.quarter}} per quarter</span> <br>
+                                <span>${{item.gram.half}} per half</span> <br>
+                                <span>${{item.gram.oz}} per oz</span> <br>
+                            </div>
+                    {% else %}
+                                <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% endif %}
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -274,10 +291,21 @@ function add_to_cart(str) {
             <div class="row">
 {% for item in hybrids %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
+                    {% if item.gram.quarter %}
+                            <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                                <span>${{item.gram.quarter}} per quarter</span> <br>
+                                <span>${{item.gram.half}} per half</span> <br>
+                                <span>${{item.gram.oz}} per oz</span> <br>
+                            </div>
+                    {% else %}
+                                <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% endif %}
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -298,10 +326,21 @@ function add_to_cart(str) {
             <div class="row">
 {% for item in sativas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
+                    {% if item.gram.quarter %}
+                            <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                                <span>${{item.gram.quarter}} per quarter</span> <br>
+                                <span>${{item.gram.half}} per half</span> <br>
+                                <span>${{item.gram.oz}} per oz</span> <br>
+                            </div>
+                    {% else %}
+                                <span>${{item.gram.gram}} per gram</span> <br>
+                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% endif %}
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -493,7 +532,7 @@ function add_to_cart(str) {
                                   </div>
 
 
-
+<div id="indoor_hide">
 
 
                                   <div class="row" style="border-bottom:1px solid black">
@@ -525,7 +564,7 @@ function add_to_cart(str) {
                                     <div class="col-md-3" style="text-align:left" id="select_nug_oz">5$</div>
                                     <div class="col-md-5">for 30g ounce</div>
                                   </div>
-                                  
+</div>                                  
                                   <br>
                                   or
                                   <br>
@@ -540,191 +579,7 @@ function add_to_cart(str) {
             </div>
         </div>
     </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/portfolio/cake.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/portfolio/circus.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/portfolio/game.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/portfolio/safe.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="/static/img/portfolio/submarine.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 {% block scripts %}
     <!-- jQuery -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
