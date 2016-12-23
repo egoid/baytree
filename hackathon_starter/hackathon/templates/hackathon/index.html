@@ -252,6 +252,13 @@ function add_to_cart(str) {
     cart.push(item)
     $("#number_of_items")[0].innerText = cart.length
 }
+function reset_menu() {
+     $("#item_gram")[0].innerText = "Add to Cart"   
+     $("#item_eighth")[0].innerText = "Add to Cart"   
+     $("#item_quad")[0].innerText = "Add to Cart"   
+     $("#item_half")[0].innerText = "Add to Cart"   
+     $("#item_oz")[0].innerText = "Add to Cart"   
+}
 </script>
             <div class="row">
 {% for item in indicas %}
@@ -491,7 +498,7 @@ function add_to_cart(str) {
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
+                <div class="lr" onClick="reset_menu()">
                     <div class="rl">
                     </div>
                 </div>
@@ -572,7 +579,7 @@ function add_to_cart(str) {
 
                                 </center>
                               </div>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onClick="reset_menu()"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
                 </div>
