@@ -40,6 +40,7 @@ from hackathon.forms import UserForm
 import pyrebase
 from firebase_token_generator import create_token
 import json
+from twilio.rest import TwilioRestClient
 
 config = {
   "apiKey": "AIzaSyBA1QJqobSlNn3PZ8fSNx0BHqqYGsACtsU",
@@ -120,7 +121,52 @@ def upload(request):
     firebase = pyrebase.initialize_app(config)
     storage = firebase.storage()
     storage.child("images/"+str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
+    ACCOUNT_SID = 'ACff521c563713463e8ba30b7bfe178765'
+    AUTH_TOKEN = '05c27626b84c5440b4a2f81acf0d4d3b'
+
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+    text_string = "You have a new user to verify. Login to Firebase and verify the email: " + str(request.POST['user'])
+    client.messages.create(
+        to = '+19492459949',
+        from_ = '+17042009330',
+        body = text_string,
+    )  
     return JsonResponse({'action':'completed'})
+
+
+@csrf_exempt
+def submit_order(request):
+  try:
+    cart = json.loads(str(request.POST['cart']))
+    address = str(request.POST['address'])
+    text_string = "New Order! Deliver to " + str(address) + " \n"
+    count = 1
+    total = 0
+    for item in cart:
+      total += int(item['price'])
+      add_string = str(count) + ". " + str(item['strain']) + " - " + str(item['qty']) + " ( $" + str(item['price']) + " ) \n"
+      text_string += add_string
+      count += 1
+    text_string += " TOTAL PRICE : $" + str(total) + " \n"
+    text_string += " TIME OF ORDER : " + str(strftime("%m/%d %H:%M", gmtime()))
+    ACCOUNT_SID = 'ACff521c563713463e8ba30b7bfe178765'
+    AUTH_TOKEN = '05c27626b84c5440b4a2f81acf0d4d3b'
+
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
+    client.messages.create(
+        to = '+19492459949',
+        from_ = '+17042009330',
+        body = text_string,
+    )
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+    db.child("orders").push(text_string, request.POST['token'] )
+    return JsonResponse({'action':'complete'})
+  except:
+    return JsonResponse({'action':'error'})
+    
+
+
 
 
 
