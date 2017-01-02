@@ -285,18 +285,43 @@ function confirm_order() {
                 </div>
             </div>
 <script>
-function select_nug(name,gram,eighth,quarter,half,oz,url) {
+function select_nug(name,gram,eighth,quarter,half,oz,qp,hp,url) {
+    if (gram) {
+        $("#select_nug_gram")[0].innerText = String("$ "+gram)
+    } else {
+        $("#selected_gram").css('display','none')
+    }
+    if (eighth) {
+        $("#select_nug_eighth")[0].innerText = String("$ "+eighth)
+    } else {
+        $("#selected_eighth").css('display','none')
+    }  
     if (quarter) {
         $("#select_nug_quad")[0].innerText = String("$ "+quarter)
-        $("#select_nug_half")[0].innerText = String("$ "+half)
-        $("#select_nug_oz")[0].innerText = String("$ "+oz)
-        $("#indoor_hide").css('display','initial')
     } else {
-        $("#indoor_hide").css('display','none')
+        $("#selected_quad").css('display','none')
+    }
+    if (half) {
+        $("#select_nug_half")[0].innerText = String("$ "+half)
+    } else {
+        $("#selected_half").css('display','none')
+    }
+    if (oz) {
+        $("#select_nug_oz")[0].innerText = String("$ "+oz)
+    } else {
+        $("#selected_oz").css('display','none')
+    }
+    if (qp) {
+        $("#select_nug_qp")[0].innerText = String("$ "+qp)
+    } else {
+        $("#selected_qp").css('display','none')
+    }
+    if (hp) {
+        $("#select_nug_hp")[0].innerText = String("$ "+hp)   
+    } else {
+        $("#selected_hp").css('display','none')
     }
     $("#selected_nug_title")[0].innerText = String(name)
-    $("#select_nug_gram")[0].innerText = String("$ "+gram)
-    $("#select_nug_eighth")[0].innerText = String("$ "+eighth)
     $("#chosen_nug_pic").attr('src','/static/img/'+String(url)+'.jpg')
 }
 function add_to_cart(str) {
@@ -330,22 +355,29 @@ function reset_menu() {
             <div class="row">
 {% for item in indicas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.gram.qp}}','{{item.gram.hp}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
                                 <!-- {{item}} -->
-                    {% if item.gram.quarter %}
                             <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
                                 <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% if item.gram.quarter %}
                                 <span>${{item.gram.quarter}} per quarter</span> <br>
-                                <span>${{item.gram.half}} per half</span> <br>
-                                <span>${{item.gram.oz}} per oz</span> <br>
-                            </div>
-                    {% else %}
-                                <span>${{item.gram.gram}} per gram</span> <br>
-                                <span>${{item.gram.eighth}} per eighth</span> <br>
                     {% endif %}
+                    {% if item.gram.half %}
+                                <span>${{item.gram.half}} per half</span> <br>
+                    {% endif %}
+                    {% if item.gram.oz %}
+                                <span>${{item.gram.oz}} per oz</span> <br>
+                    {% endif %}
+                    {% if item.gram.qp %}
+                                <span>${{item.gram.qp}} per quarter pound</span> <br>
+                    {% endif %}
+                    {% if item.gram.hp %}
+                                <span>${{item.gram.hp}} per half pound</span> <br>
+                    {% endif %}
+                            </div>
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -365,21 +397,29 @@ function reset_menu() {
             <div class="row">
 {% for item in hybrids %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.gram.hp}}','{{item.gram.hp}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
-                    {% if item.gram.quarter %}
+                                <!-- {{item}} -->
                             <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
                                 <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% if item.gram.quarter %}
                                 <span>${{item.gram.quarter}} per quarter</span> <br>
-                                <span>${{item.gram.half}} per half</span> <br>
-                                <span>${{item.gram.oz}} per oz</span> <br>
-                            </div>
-                    {% else %}
-                                <span>${{item.gram.gram}} per gram</span> <br>
-                                <span>${{item.gram.eighth}} per eighth</span> <br>
                     {% endif %}
+                    {% if item.gram.half %}
+                                <span>${{item.gram.half}} per half</span> <br>
+                    {% endif %}
+                    {% if item.gram.oz %}
+                                <span>${{item.gram.oz}} per oz</span> <br>
+                    {% endif %}
+                    {% if item.gram.qp %}
+                                <span>${{item.gram.qp}} per quarter pound</span> <br>
+                    {% endif %}
+                    {% if item.gram.hp %}
+                                <span>${{item.gram.hp}} per half pound</span> <br>
+                    {% endif %}
+                            </div>
                             </div>
                         </div>
                         <center><h2 style="font-size:16px">{{item.name}}</h2></center>
@@ -400,24 +440,31 @@ function reset_menu() {
             <div class="row">
 {% for item in sativas %}
                 <div class="col-sm-4 portfolio-item">
-                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.img}}')">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal" onClick="select_nug('{{item.name}}','{{item.gram.gram}}','{{item.gram.eighth}}','{{item.gram.quarter}}','{{item.gram.half}}','{{item.gram.oz}}','{{item.gram.hp}}','{{item.gram.hp}}','{{item.img}}')">
                         <div class="caption">
                             <div class="caption-content">
-                    {% if item.gram.quarter %}
+                                <!-- {{item}} -->
                             <div style="margin-top:-50px">
                                 <span>${{item.gram.gram}} per gram</span> <br>
                                 <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% if item.gram.quarter %}
                                 <span>${{item.gram.quarter}} per quarter</span> <br>
+                    {% endif %}
+                    {% if item.gram.half %}
                                 <span>${{item.gram.half}} per half</span> <br>
+                    {% endif %}
+                    {% if item.gram.oz %}
                                 <span>${{item.gram.oz}} per oz</span> <br>
-                            </div>
-                    {% else %}
-                                <span>${{item.gram.gram}} per gram</span> <br>
-                                <span>${{item.gram.eighth}} per eighth</span> <br>
+                    {% endif %}
+                    {% if item.gram.qp %}
+                                <span>${{item.gram.qp}} per quarter pound</span> <br>
+                    {% endif %}
+                    {% if item.gram.hp %}
+                                <span>${{item.gram.hp}} per half pound</span> <br>
                     {% endif %}
                             </div>
-                        </div>
-                        <center><h2 style="font-size:16px">{{item.name}}</h2></center>
+                            </div>
+                        </div>                        <center><h2 style="font-size:16px">{{item.name}}</h2></center>
                         <img src="/static/img/{{item.img}}.jpg" class="img-responsive" alt="" style="width:100%;height:200px">
                     </a>
                 </div>
@@ -583,7 +630,7 @@ function reset_menu() {
 
 
 
-                                  <div class="row" style="border-bottom:1px solid black">
+                                  <div class="row" style="border-bottom:1px solid black" id="selected_gram">
                                     <div class="col-md-4">
                                      <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('gram')" id="item_gram"> Add to Cart </button>
                                     </div>
@@ -594,7 +641,7 @@ function reset_menu() {
 
 
 
-                                  <div class="row" style="border-bottom:1px solid black">
+                                  <div class="row" style="border-bottom:1px solid black"  id="selected_eighth">
                                     <div class="col-md-4">
                                      <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('eighth')" id="item_eighth"> Add to Cart </button>
                                     </div>
@@ -602,11 +649,7 @@ function reset_menu() {
                                     <div class="col-md-5">for 3.6g eighth</div>
                                   </div>
 
-
-<div id="indoor_hide">
-
-
-                                  <div class="row" style="border-bottom:1px solid black">
+                                  <div class="row" style="border-bottom:1px solid black"  id="selected_quad">
                                     <div class="col-md-4">
                                      <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('quad')" id="item_quad"> Add to Cart </button>
                                     </div>
@@ -617,7 +660,7 @@ function reset_menu() {
 
 
 
-                                  <div class="row" style="border-bottom:1px solid black">
+                                  <div class="row" style="border-bottom:1px solid black" id="selected_half">
                                     <div class="col-md-4">
                                      <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('half')" id="item_half"> Add to Cart </button>
                                     </div>
@@ -628,18 +671,35 @@ function reset_menu() {
 
 
 
-                                  <div class="row" style="border-bottom:1px solid black">
+                                  <div class="row" style="border-bottom:1px solid black" id="selected_oz">
                                     <div class="col-md-4">
                                      <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
                                     </div>
                                     <div class="col-md-3" style="text-align:left" id="select_nug_oz">5$</div>
                                     <div class="col-md-5">for 30g ounce</div>
                                   </div>
-</div>                                  
+
+                                  <div class="row" style="border-bottom:1px solid black" id="selected_qp">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_qp">5$</div>
+                                    <div class="col-md-5">for quarter pound</div>
+                                  </div>
+
+                                  <div class="row" style="border-bottom:1px solid black" id="selected_hp">
+                                    <div class="col-md-4">
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
+                                    </div>
+                                    <div class="col-md-3" style="text-align:left" id="select_nug_hp">5$</div>
+                                    <div class="col-md-5">for half pound</div>
+                                  </div>     
+
+
                                   <br>
                                   or
                                   <br>
-                                  Mix and Match<br> 3 strains for a 4.6g eighth
+                                  Mix and Match<br> 3 strains for a 3.6g eighth
 
                                 </center>
                               </div>
