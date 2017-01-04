@@ -331,6 +331,8 @@ function add_to_cart(str) {
     if (str === 'quad') {var price = $("#select_nug_quad")[0].innerText.slice(2,5)}
     if (str === 'half') {var price = $("#select_nug_half")[0].innerText.slice(2,5)}
     if (str === 'oz') {var price = $("#select_nug_oz")[0].innerText.slice(2,5)}
+    if (str === 'qp') {var price = $("#select_nug_qp")[0].innerText.slice(2,5)}
+    if (str === 'hp') {var price = $("#select_nug_hp")[0].innerText.slice(2,5)}
     var item = {
         'strain' : $("#selected_nug_title")[0].innerText,
         'qty' : str,
@@ -681,7 +683,7 @@ function reset_menu() {
 
                                   <div class="row" style="border-bottom:1px solid black" id="selected_qp">
                                     <div class="col-md-4">
-                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('qp')" id="item_qp"> Add to Cart </button>
                                     </div>
                                     <div class="col-md-3" style="text-align:left" id="select_nug_qp">5$</div>
                                     <div class="col-md-5">for quarter pound</div>
@@ -689,7 +691,7 @@ function reset_menu() {
 
                                   <div class="row" style="border-bottom:1px solid black" id="selected_hp">
                                     <div class="col-md-4">
-                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('oz')" id="item_oz"> Add to Cart </button>
+                                     <button class="btn" style="margin-top:10px;font-size:12px" onClick="add_to_cart('hp')" id="item_hp"> Add to Cart </button>
                                     </div>
                                     <div class="col-md-3" style="text-align:left" id="select_nug_hp">5$</div>
                                     <div class="col-md-5">for half pound</div>
