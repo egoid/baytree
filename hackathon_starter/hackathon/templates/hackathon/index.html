@@ -286,6 +286,8 @@ function confirm_order() {
             </div>
 <script>
 function select_nug(name,gram,eighth,quarter,half,oz,qp,hp,url) {
+    console.log(qp)
+    console.log(hp)
     if (gram) {
         $("#select_nug_gram")[0].innerText = String("$ "+gram)
     } else {

@@ -127,7 +127,7 @@ def upload(request):
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     text_string = "You have a new user to verify. Login to Firebase and verify the email: " + str(request.POST['user'])
     client.messages.create(
-        to = '+19492459949',
+        to = '+4156508944',
         from_ = '+17042009330',
         body = text_string,
     )  
@@ -154,7 +154,7 @@ def submit_order(request):
 
     client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN)
     client.messages.create(
-        to = '+19492459949',
+        to = '+4156508944',
         from_ = '+17042009330',
         body = text_string,
     )
