@@ -116,13 +116,11 @@ def login(request):
 @csrf_exempt
 def upload(request):
     print(request.FILES['file'])
-    print(request.FILES['filethree'])
     user = str(request.POST['user'])
     print(user)
     firebase = pyrebase.initialize_app(config)
     storage = firebase.storage()
     storage.child("images/"+str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
-    storage.child("images/"+str(user)+"/"+str(request.FILES['filethree'])).put(request.FILES['filethree'])
     ACCOUNT_SID = 'ACff521c563713463e8ba30b7bfe178765'
     AUTH_TOKEN = '05c27626b84c5440b4a2f81acf0d4d3b'
 
