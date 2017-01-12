@@ -109,17 +109,24 @@
         </div>
         <!-- <div id="upload_form"> -->
         <div id="upload_form" style="display:none">
+<form method="post" enctype="multipart/form-data" id="myForm" action="upload/"  target="dummyframe">
             <h4>Upload your Doctor's recommendation</h4>
-              <form method="post" enctype="multipart/form-data" id="myForm" action="upload/"  target="dummyframe">
                 <input type="file" name="file" class="inputimg" id="nameImg" accept="image/*">
                 <input type="text" name="user" id="user" style="display:none">
                 <br />
+            <br><hr><br>
+            <h4>Upload your Driver's License</h4>
+                <input type="file" name="file2" class="inputimg" id="driverImg" accept="image/*">
+                <input type="text" name="user" id="user" style="display:none">
+                <br />
+                  <hr>
                 <span class="input-group-btn">
-                        <button  type="submit" class="btn btn-block" onClick="open_shop()">Upload Rec
+                        <button  type="submit" class="btn btn-block" onClick="open_shop()">Upload
                         </button>
                   </span>
-              </form>            
+  </form>            
         </div>
+        <!-- <div id="shopping_cart"> -->
         <!-- <div id="shopping_cart"> -->
         <div id="shopping_cart" style="display:none">
             <h4>This is your shopping cart!</h4>
@@ -137,9 +144,11 @@
             <center><button class="btn" onClick="confirm_order()"> Confirm Order </button></center>
         </div>
         <div id="address_form" style="display:none">
+        <!-- <div id="address_form"> -->
+            <h4>Enter your Phone Number</h4>
+            <input type="number" class="form-control" aria-describedby="sizing-addon3" id="u_address">
+            <hr>
             <h4>Enter your Shipping Address</h4>
-            <h6>We will only deliver to San Francisco</h6>
-            <h6>Estimated Delivery Times 60 - 90 minutes</h6>
             <div class="row" id="cart_pin" style="padding-left:50px;padding-right:50px">
             <input type="text" class="form-control" aria-describedby="sizing-addon3" id="u_address">
             <input type="text" class="form-control" aria-describedby="sizing-addon3" value="San Francisco, CA" disabled>
@@ -210,7 +219,7 @@ function open_shop() {
     update_cart()
     setTimeout(function(){ 
         $("#loading_form").fadeOut(250)
-        $("#upload_form").fadeOut(250)
+        // $("#upload_form").fadeOut(250)
         $("#shopping_cart").fadeIn(250)
     }, 2000);
 }
@@ -274,7 +283,7 @@ function confirm_order() {
             </div>
         </div>
     </header>
-
+<img src="/static/img/title.jpg">
 <script>
 function select_nug(name,gram,eighth,quarter,half,oz,qp,hp,url) {
     console.log(qp)

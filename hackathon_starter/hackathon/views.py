@@ -49,6 +49,14 @@ config = {
   "storageBucket": "baytreeexpress-53112.appspot.com",
   "messagingSenderId": "70657304005",
 }
+def send_simple_message():
+    return requests.post(
+        "https://api.mailgun.net/v3/sandbox0fe2b7d3359f46f2bd9698bf641a6b87.mailgun.org/messages",
+        auth=("api", "key-a79455e6003c1a54f041aeedbeaa3c90"),
+        data={"from": "Mailgun Sandbox <postmaster@sandbox0fe2b7d3359f46f2bd9698bf641a6b87.mailgun.org>",
+              "to": "Jake <baytreeexpress@yahoo.com>",
+              "subject": "New User",
+              "text": "Congratulations Jake, you just sent an email with Mailgun!  You are truly awesome!  You can see a record of this email in your logs: https://mailgun.com/cp/log .  You can send up to 300 emails/day from this sandbox server.  Next, you should add your own domain so you can send 10,000 emails/month for free."})
 
 def index(request):
     firebase = pyrebase.initialize_app(config)
@@ -120,7 +128,8 @@ def upload(request):
     print(user)
     firebase = pyrebase.initialize_app(config)
     storage = firebase.storage()
-    storage.child("images/"+str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
+    storage.child(str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
+    storage.child(str(user)+"/"+str(request.FILES['file2'])).put(request.FILES['file2'])
     ACCOUNT_SID = 'ACff521c563713463e8ba30b7bfe178765'
     AUTH_TOKEN = '05c27626b84c5440b4a2f81acf0d4d3b'
 
