@@ -128,8 +128,8 @@ def upload(request):
     print(user)
     firebase = pyrebase.initialize_app(config)
     storage = firebase.storage()
-    storage.child(str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
-    storage.child(str(user)+"/"+str(request.FILES['file2'])).put(request.FILES['file2'])
+    storage.child("images/"+str(user)+"/"+str(request.FILES['file'])).put(request.FILES['file'])
+    storage.child("images/"+str(user)+"/"+str(request.FILES['file2'])).put(request.FILES['file2'])
     ACCOUNT_SID = 'ACff521c563713463e8ba30b7bfe178765'
     AUTH_TOKEN = '05c27626b84c5440b4a2f81acf0d4d3b'
 

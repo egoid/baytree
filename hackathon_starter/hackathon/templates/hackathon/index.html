@@ -219,7 +219,7 @@ function open_shop() {
     update_cart()
     setTimeout(function(){ 
         $("#loading_form").fadeOut(250)
-        // $("#upload_form").fadeOut(250)
+        $("#upload_form").fadeOut(250)
         $("#shopping_cart").fadeIn(250)
     }, 2000);
 }
@@ -283,7 +283,7 @@ function confirm_order() {
             </div>
         </div>
     </header>
-<img src="/static/img/title.jpg">
+<img src="/static/img/title.jpg" style="text-align: center;margin-left: 25%;width: 50%;margin-top: 100px;">
 <script>
 function select_nug(name,gram,eighth,quarter,half,oz,qp,hp,url) {
     console.log(qp)
